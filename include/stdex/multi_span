@@ -2,9 +2,13 @@
 //
 // Maintained by Jack Diver.
 //
+// Copyright (c) 2019 Jack Diver
+//
 // Modified from :-
 //
 // github.com/microsoft/GSL
+//
+// Copyright (c) 2015 Microsoft Corporation. All rights reserved. 
 //
 //
 // This code is licensed under the MIT License (MIT).
