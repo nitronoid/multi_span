@@ -1,0 +1,132 @@
+os: linux
+dist: xenial
+group: travis_latest
+language: c++
+notifications:
+  email: false
+
+cache:
+  directories:
+    - ${TRAVIS_BUILD_DIR}/deps
+
+addons:
+  apt:
+    sources: &apt_sources
+      - ubuntu-toolchain-r-test
+      - sourceline: 'deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8'
+        key_url: 'https://bazel.build/bazel-release.pub.gpg'
+    packages:
+      - bazel
+  homebrew: &homebrew_addons
+    taps: bazelbuild/tap
+    packages: bazelbuild/tap/bazel
+    update: true
+
+
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode7
+      compiler: clang
+      env: COMPILER='clang++' CXX_STANDARD=14
+      addons: &xcode7
+        homebrew: *homebrew_addons
+
+    - os: osx
+      osx_image: xcode8
+      compiler: clang
+      env: COMPILER='clang++' CXX_STANDARD=14
+      addons: &xcode8
+        homebrew: *homebrew_addons
+
+    - os: osx
+      osx_image: xcode9
+      compiler: clang
+      env: COMPILER='clang++' CXX_STANDARD=14
+      addons: &xcode9
+        homebrew: *homebrew_addons
+
+    - os: osx
+      osx_image: xcode10
+      compiler: clang
+      env: COMPILER='clang++' CXX_STANDARD=17
+      addons: &xcode10
+        homebrew: *homebrew_addons
+
+    - os: osx
+      osx_image: xcode11
+      compiler: clang
+      env: COMPILER='clang++' CXX_STANDARD=17
+      addons: &xcode11
+        homebrew: *homebrew_addons
+
+    - os: linux
+      env: COMPILER=g++-5 CXX_STANDARD=14
+      compiler: gcc
+      addons: &gcc5
+        apt:
+          packages: ["g++-5", "python3-pip", "lcov", "bazel"]
+          sources: *apt_sources
+
+    - os: linux
+      env: COMPILER=g++-6 CXX_STANDARD=14
+      compiler: gcc
+      addons: &gcc6
+        apt:
+          packages: ["g++-6", "python3-pip", "lcov", "bazel"]
+          sources: *apt_sources
+
+    - os: linux
+      env: COMPILER=g++-7 CXX_STANDARD=17
+      compiler: gcc
+      addons: &gcc7
+        apt:
+          packages: ["g++-7", "python3-pip", "lcov", "bazel"]
+          sources: *apt_sources
+
+    - os: linux
+      env: COMPILER=g++-8 CXX_STANDARD=17
+      compiler: gcc
+      addons: &gcc8
+        apt:
+          packages: ["g++-8", "python3-pip", "lcov", "bazel"]
+          sources: *apt_sources
+
+    - os: linux
+      env: COMPILER=g++-9 CXX_STANDARD=17
+      compiler: gcc
+      addons: &gcc9
+        apt:
+          packages: ["g++-9", "python3-pip", "lcov", "bazel"]
+          sources: *apt_sources
+
+    - os: linux
+      env: COMPILER=clang++-4.0 CXX_STANDARD=14
+      compiler: clang
+      addons: &clang4_0
+        apt:
+          packages: ["clang-4.0", "g++-9", "python3-pip", "lcov", "bazel"]
+          sources: *apt_sources
+
+    - os: linux
+      env: COMPILER=clang++-5.0 CXX_STANDARD=17
+      compiler: clang
+      addons: &clang5_0
+        apt:
+          packages: ["clang-5.0", "g++-9", "python3-pip", "lcov", "bazel"]
+          sources: *apt_sources
+
+    - os: linux
+      env: COMPILER=clang++-6.0 CXX_STANDARD=17
+      compiler: clang
+      addons: &clang6_0
+        apt:
+          packages: ["clang-6.0", "g++-9", "python3-pip", "lcov", "bazel"]
+          sources: *apt_sources
+
+script:
+  - export CC=${COMPILER}
+  - export CXX=${COMPILER}
+  - bazel --bazelrc=tools/bazel.travis.rc test --compilation_mode dbg --cxxopt="-std=c++${CXX_STANDARD}" --jobs 2 //test/...
+  - bazel --bazelrc=tools/bazel.travis.rc test --compilation_mode opt --cxxopt="-std=c++${CXX_STANDARD}" --jobs 2 //test/...
+
