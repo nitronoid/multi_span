@@ -1,3 +1,2 @@
 build --symlink_prefix=bazel-build/
-build --cxxopt='-std=c++14'
 

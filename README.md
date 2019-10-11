@@ -1,5 +1,9 @@
 # `multi_span`: A multi-dimensional view over contiguous data.
 
+[![Standardisation](https://img.shields.io/badge/C%2B%2B-14-BLUE)](https://en.wikipedia.org/wiki/C%2B%2B#Standardization)
+[![License](https://img.shields.io/badge/license-MIT-BLUE)](https://opensource.org/licenses/MIT)
+[![Build status](https://travis-ci.org/nitronoid/multi_span.svg?branch=master)](https://travis-ci.org/nitronoid/multi_span)
+
 `multi_span` is a single-file header-only library for multi-dimensional views over arrays of contiguous data.
 This repository was created to host and maintain the implementation of `multi_span` provided in the Microsoft GSL, which has been deprecated.
 The ISO-C++ proposal P0009 will add support for non-owning multi-dimensional array references to the C++ standard library. 
