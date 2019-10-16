@@ -146,9 +146,7 @@ public:
   using const_reference =
     std::add_lvalue_reference_t<std::add_const_t<value_type>>;
 
-  constexpr multi_span_index() noexcept
-  {
-  }
+  constexpr multi_span_index() noexcept = default;
 
   constexpr multi_span_index(const value_type (&values)[Rank]) noexcept
   {
@@ -405,7 +403,7 @@ struct BoundsRanges<dynamic_range, RestRanges...> : BoundsRanges<RestRanges...>
   static const size_type TotalSize = dynamic_range;
 
 private:
-  size_type m_bound;
+  size_type m_bound {0};
 
 public:
   constexpr BoundsRanges(const std::ptrdiff_t* const arr)
@@ -414,9 +412,7 @@ public:
     detail::EXPECTS(0 <= *arr);
   }
 
-  constexpr BoundsRanges() noexcept : m_bound(0)
-  {
-  }
+  constexpr BoundsRanges() noexcept = default;
 
   template <std::ptrdiff_t OtherRange, std::ptrdiff_t... RestOtherRanges>
   constexpr BoundsRanges(
@@ -492,7 +488,7 @@ struct BoundsRanges<CurRange, RestRanges...> : BoundsRanges<RestRanges...>
   constexpr BoundsRanges(const std::ptrdiff_t* const arr) : Base(arr)
   {
   }
-  constexpr BoundsRanges() = default;
+  constexpr BoundsRanges() noexcept = default;
 
   template <std::ptrdiff_t OtherRange, std::ptrdiff_t... RestOtherRanges>
   constexpr BoundsRanges(
@@ -979,6 +975,9 @@ public:
   using reference = value_type&;
   using index_type = value_type;
   using index_size_type = typename IndexType::value_type;
+
+  constexpr bounds_iterator() noexcept = default;
+
   template <typename Bounds>
   explicit bounds_iterator(const Bounds& bnd, value_type curr) noexcept
     : boundary_(bnd.index_bounds()), curr_(std::move(curr))
