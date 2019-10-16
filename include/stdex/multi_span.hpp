@@ -1210,7 +1210,7 @@ private:
     return res;
   }
 
-  value_type boundary_;
+  std::remove_const_t<value_type> boundary_;
   std::remove_const_t<value_type> curr_;
 };
 
