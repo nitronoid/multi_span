@@ -147,6 +147,11 @@ public:
     std::add_lvalue_reference_t<std::add_const_t<value_type>>;
 
   constexpr multi_span_index() noexcept = default;
+  constexpr multi_span_index(multi_span_index const& other) noexcept = default;
+  constexpr multi_span_index&
+  operator=(multi_span_index const& rhs) noexcept = default;
+  constexpr multi_span_index(multi_span_index&&) noexcept = default;
+  constexpr multi_span_index& operator=(multi_span_index&&) noexcept = default;
 
   constexpr multi_span_index(const value_type (&values)[Rank]) noexcept
   {
@@ -160,11 +165,6 @@ public:
     : elems{narrow_cast<value_type>(ds)...}
   {
   }
-
-  constexpr multi_span_index(const multi_span_index& other) noexcept = default;
-
-  constexpr multi_span_index&
-  operator=(const multi_span_index& rhs) noexcept = default;
 
   // Preconditions: component_idx < rank
   constexpr reference operator[](std::size_t component_idx)
@@ -358,6 +358,10 @@ struct BoundsRanges
   {
   }
   constexpr BoundsRanges() noexcept = default;
+  constexpr BoundsRanges(BoundsRanges const&) noexcept = default;
+  constexpr BoundsRanges& operator=(BoundsRanges const&) noexcept = default;
+  constexpr BoundsRanges(BoundsRanges&&) noexcept = default;
+  constexpr BoundsRanges& operator=(BoundsRanges&&) noexcept = default;
 
   template <typename T, std::size_t Dim>
   constexpr void serialize(T&) const
@@ -413,6 +417,10 @@ public:
   }
 
   constexpr BoundsRanges() noexcept = default;
+  constexpr BoundsRanges(BoundsRanges const&) noexcept = default;
+  constexpr BoundsRanges& operator=(BoundsRanges const&) noexcept = default;
+  constexpr BoundsRanges(BoundsRanges&&) noexcept = default;
+  constexpr BoundsRanges& operator=(BoundsRanges&&) noexcept = default;
 
   template <std::ptrdiff_t OtherRange, std::ptrdiff_t... RestOtherRanges>
   constexpr BoundsRanges(
@@ -489,6 +497,10 @@ struct BoundsRanges<CurRange, RestRanges...> : BoundsRanges<RestRanges...>
   {
   }
   constexpr BoundsRanges() noexcept = default;
+  constexpr BoundsRanges(BoundsRanges const&) noexcept = default;
+  constexpr BoundsRanges& operator=(BoundsRanges const&) noexcept = default;
+  constexpr BoundsRanges(BoundsRanges&&) noexcept = default;
+  constexpr BoundsRanges& operator=(BoundsRanges&&) noexcept = default;
 
   template <std::ptrdiff_t OtherRange, std::ptrdiff_t... RestOtherRanges>
   constexpr BoundsRanges(
@@ -652,7 +664,11 @@ public:
   using sliced_type = static_bounds<RestRanges...>;
   using mapping_type = contiguous_mapping_tag;
 
-  constexpr static_bounds() /*noexcept*/ = default;
+  constexpr static_bounds() noexcept = default;
+  constexpr static_bounds(static_bounds const&) noexcept = default;
+  constexpr static_bounds& operator=(static_bounds const&) noexcept = default;
+  constexpr static_bounds(static_bounds&&) noexcept = default;
+  constexpr static_bounds& operator=(static_bounds&&) noexcept = default;
 
   template <typename SourceType, typename TargetType, std::size_t Rank>
   struct BoundsRangeConvertible2;
@@ -846,9 +862,10 @@ public:
     std::conditional_t<rank != 0, strided_bounds<rank - 1>, void>;
   using mapping_type = generalized_mapping_tag;
 
-  constexpr strided_bounds(const strided_bounds&) noexcept = default;
-
-  constexpr strided_bounds& operator=(const strided_bounds&) noexcept = default;
+  constexpr strided_bounds(strided_bounds const&) noexcept = default;
+  constexpr strided_bounds& operator=(strided_bounds const&) noexcept = default;
+  constexpr strided_bounds(strided_bounds&&) noexcept = default;
+  constexpr strided_bounds& operator=(strided_bounds&&) noexcept = default;
 
   constexpr strided_bounds(const value_type (&values)[rank], index_type strides)
     : m_extents(values), m_strides(std::move(strides))
@@ -977,6 +994,11 @@ public:
   using index_size_type = typename IndexType::value_type;
 
   constexpr bounds_iterator() noexcept = default;
+
+  constexpr bounds_iterator(bounds_iterator const&) noexcept = default;
+  constexpr bounds_iterator& operator=(bounds_iterator const&) noexcept = default;
+  constexpr bounds_iterator(bounds_iterator&&) noexcept = default;
+  constexpr bounds_iterator& operator=(bounds_iterator&&) noexcept = default;
 
   template <typename Bounds>
   explicit bounds_iterator(const Bounds& bnd, value_type curr) noexcept
