@@ -2060,6 +2060,12 @@ private:
   friend class strided_span;
 
 public:
+  constexpr strided_span() noexcept = default;
+  constexpr strided_span(strided_span const&) noexcept = default;
+  constexpr strided_span& operator=(strided_span const&) noexcept = default;
+  constexpr strided_span(strided_span &&) noexcept = default;
+  constexpr strided_span& operator=(strided_span &&) noexcept = default;
+
   // from raw data
   constexpr strided_span(pointer ptr, size_type size, bounds_type bounds)
     : data_(ptr), bounds_(std::move(bounds))
@@ -2352,6 +2358,12 @@ private:
   }
 
 public:
+  constexpr contiguous_span_iterator() noexcept = default;
+  constexpr contiguous_span_iterator(contiguous_span_iterator const&) noexcept = default;
+  constexpr contiguous_span_iterator& operator=(contiguous_span_iterator const&) noexcept = default;
+  constexpr contiguous_span_iterator(contiguous_span_iterator &&) noexcept = default;
+  constexpr contiguous_span_iterator& operator=(contiguous_span_iterator &&) noexcept = default;
+
   reference operator*() const
   {
     validateThis();
@@ -2484,6 +2496,12 @@ private:
   }
 
 public:
+  constexpr general_span_iterator() noexcept = default;
+  constexpr general_span_iterator(general_span_iterator const&) noexcept = default;
+  constexpr general_span_iterator& operator=(general_span_iterator const&) noexcept = default;
+  constexpr general_span_iterator(general_span_iterator &&) noexcept = default;
+  constexpr general_span_iterator& operator=(general_span_iterator &&) noexcept = default;
+
   reference operator*() noexcept
   {
     return (*m_container)[*m_itr];
