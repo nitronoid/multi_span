@@ -827,15 +827,24 @@ public:
   {
     return !(*this == rhs);
   }
-
-  constexpr const_iterator begin() const noexcept
+  constexpr const_iterator cbegin() const noexcept
   {
     return const_iterator(*this, index_type{});
   }
 
-  constexpr const_iterator end() const noexcept
+  constexpr const_iterator cend() const noexcept
   {
     return const_iterator(*this, this->index_bounds());
+  }
+
+  constexpr iterator begin() const noexcept
+  {
+    return iterator(*this, index_type{});
+  }
+
+  constexpr iterator end() const noexcept
+  {
+    return iterator(*this, this->index_bounds());
   }
 };
 
@@ -951,13 +960,22 @@ public:
   {
     return m_extents;
   }
+  constexpr iterator begin() const noexcept
+  {
+    return iterator{*this, index_type{}};
+  }
 
-  constexpr const_iterator begin() const noexcept
+  constexpr iterator end() const noexcept
+  {
+    return iterator{*this, index_bounds()};
+  }
+
+  constexpr const_iterator cbegin() const noexcept
   {
     return const_iterator{*this, index_type{}};
   }
 
-  constexpr const_iterator end() const noexcept
+  constexpr const_iterator cend() const noexcept
   {
     return const_iterator{*this, index_bounds()};
   }
@@ -994,7 +1012,6 @@ public:
   using index_size_type = typename IndexType::value_type;
 
   constexpr bounds_iterator() noexcept = default;
-
   constexpr bounds_iterator(bounds_iterator const&) noexcept = default;
   constexpr bounds_iterator& operator=(bounds_iterator const&) noexcept = default;
   constexpr bounds_iterator(bounds_iterator&&) noexcept = default;
