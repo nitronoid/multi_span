@@ -8,7 +8,7 @@
 //
 // github.com/microsoft/GSL
 //
-// Copyright (c) 2015 Microsoft Corporation. All rights reserved. 
+// Copyright (c) 2015 Microsoft Corporation. All rights reserved.
 //
 //
 // This code is licensed under the MIT License (MIT).
@@ -34,14 +34,14 @@
 // for multi_span, contiguous_span_iterator, dim
 #include <stdex/multi_span>
 
-#include <algorithm>  // for fill, for_each
-#include <array>      // for array
-#include <iostream>   // for ptrdiff_t, size_t
-#include <iterator>   // for reverse_iterator, begin, end, operator!=
-#include <numeric>    // for iota
-#include <stddef.h>   // for ptrdiff_t
-#include <string>     // for string
-#include <vector>     // for vector
+#include <algorithm> // for fill, for_each
+#include <array>     // for array
+#include <iostream>  // for ptrdiff_t, size_t
+#include <iterator>  // for reverse_iterator, begin, end, operator!=
+#include <numeric>   // for iota
+#include <stddef.h>  // for ptrdiff_t
+#include <string>    // for string
+#include <vector>    // for vector
 
 using namespace std;
 using namespace stdex;
@@ -54,7 +54,7 @@ struct BaseClass
 struct DerivedClass : BaseClass
 {
 };
-}  // namespace
+} // namespace
 
 TEST_CASE("default_constructor")
 {
@@ -77,8 +77,8 @@ TEST_CASE("default_constructor")
   {
 #ifdef CONFIRM_COMPILATION_ERRORS
     multi_span<int, 1> s;
-    CHECK((s.length() == 1 &&
-           s.data() == nullptr));  // explains why it can't compile
+    CHECK((
+      s.length() == 1 && s.data() == nullptr)); // explains why it can't compile
 #endif
   }
 
@@ -112,8 +112,8 @@ TEST_CASE("from_nullptr_constructor")
   {
 #ifdef CONFIRM_COMPILATION_ERRORS
     multi_span<int, 1> s = nullptr;
-    CHECK((s.length() == 1 &&
-           s.data() == nullptr));  // explains why it can't compile
+    CHECK((
+      s.length() == 1 && s.data() == nullptr)); // explains why it can't compile
 #endif
   }
 
@@ -183,8 +183,8 @@ TEST_CASE("from_nullptr_length_constructor")
   {
 #ifdef CONFIRM_COMPILATION_ERRORS
     multi_span<int, 1> s{nullptr, 0};
-    CHECK((s.length() == 1 &&
-           s.data() == nullptr));  // explains why it can't compile
+    CHECK((
+      s.length() == 1 && s.data() == nullptr)); // explains why it can't compile
 #endif
   }
 }
@@ -478,22 +478,26 @@ TEST_CASE("from_std_array_constructor")
 
   {
     multi_span<int> s{arr};
-    CHECK((s.size() == narrow_cast<ptrdiff_t>(arr.size()) &&
-           s.data() == arr.data()));
+    CHECK(
+      (s.size() == narrow_cast<ptrdiff_t>(arr.size()) &&
+       s.data() == arr.data()));
 
     multi_span<const int> cs{arr};
-    CHECK((cs.size() == narrow_cast<ptrdiff_t>(arr.size()) &&
-           cs.data() == arr.data()));
+    CHECK(
+      (cs.size() == narrow_cast<ptrdiff_t>(arr.size()) &&
+       cs.data() == arr.data()));
   }
 
   {
     multi_span<int, 4> s{arr};
-    CHECK((s.size() == narrow_cast<ptrdiff_t>(arr.size()) &&
-           s.data() == arr.data()));
+    CHECK(
+      (s.size() == narrow_cast<ptrdiff_t>(arr.size()) &&
+       s.data() == arr.data()));
 
     multi_span<const int, 4> cs{arr};
-    CHECK((cs.size() == narrow_cast<ptrdiff_t>(arr.size()) &&
-           cs.data() == arr.data()));
+    CHECK(
+      (cs.size() == narrow_cast<ptrdiff_t>(arr.size()) &&
+       cs.data() == arr.data()));
   }
 
   {
@@ -543,14 +547,16 @@ TEST_CASE("from_const_std_array_constructor")
 
   {
     multi_span<const int> s{arr};
-    CHECK((s.size() == narrow_cast<ptrdiff_t>(arr.size()) &&
-           s.data() == arr.data()));
+    CHECK(
+      (s.size() == narrow_cast<ptrdiff_t>(arr.size()) &&
+       s.data() == arr.data()));
   }
 
   {
     multi_span<const int, 4> s{arr};
-    CHECK((s.size() == narrow_cast<ptrdiff_t>(arr.size()) &&
-           s.data() == arr.data()));
+    CHECK(
+      (s.size() == narrow_cast<ptrdiff_t>(arr.size()) &&
+       s.data() == arr.data()));
   }
 
   {
@@ -597,12 +603,14 @@ TEST_CASE("from_container_constructor")
 
   {
     multi_span<int> s{v};
-    CHECK((s.size() == narrow_cast<std::ptrdiff_t>(v.size()) &&
-           s.data() == v.data()));
+    CHECK(
+      (s.size() == narrow_cast<std::ptrdiff_t>(v.size()) &&
+       s.data() == v.data()));
 
     multi_span<const int> cs{v};
-    CHECK((cs.size() == narrow_cast<std::ptrdiff_t>(v.size()) &&
-           cs.data() == v.data()));
+    CHECK(
+      (cs.size() == narrow_cast<std::ptrdiff_t>(v.size()) &&
+       cs.data() == v.data()));
   }
 
   std::string str = "hello";
@@ -611,12 +619,14 @@ TEST_CASE("from_container_constructor")
   {
 #ifdef CONFIRM_COMPILATION_ERRORS
     multi_span<char> s{str};
-    CHECK((s.size() == narrow_cast<std::ptrdiff_t>(str.size()) &&
-           s.data() == str.data()));
+    CHECK(
+      (s.size() == narrow_cast<std::ptrdiff_t>(str.size()) &&
+       s.data() == str.data()));
 #endif
     multi_span<const char> cs{str};
-    CHECK((cs.size() == narrow_cast<std::ptrdiff_t>(str.size()) &&
-           cs.data() == str.data()));
+    CHECK(
+      (cs.size() == narrow_cast<std::ptrdiff_t>(str.size()) &&
+       cs.data() == str.data()));
   }
 
   {
@@ -624,8 +634,9 @@ TEST_CASE("from_container_constructor")
     multi_span<char> s{cstr};
 #endif
     multi_span<const char> cs{cstr};
-    CHECK((cs.size() == narrow_cast<std::ptrdiff_t>(cstr.size()) &&
-           cs.data() == cstr.data()));
+    CHECK(
+      (cs.size() == narrow_cast<std::ptrdiff_t>(cstr.size()) &&
+       cs.data() == cstr.data()));
   }
 
   {
@@ -718,7 +729,7 @@ TEST_CASE("copy_move_and_assignment")
   CHECK((s1.length() == 2 && s1.data() == &arr[1]));
 }
 
-template <class Bounds>
+template<class Bounds>
 void fn(const Bounds&)
 {
   static_assert(Bounds::static_size == 60, "static bounds is wrong size");
@@ -1021,7 +1032,7 @@ TEST_CASE("comparison_operators")
   }
 
   {
-    int arr[] = {2, 1};  // bigger
+    int arr[] = {2, 1}; // bigger
 
     multi_span<int> s1 = nullptr;
     multi_span<int> s2 = arr;
@@ -1063,8 +1074,8 @@ TEST_CASE("comparison_operators")
   {
     int arr[] = {1, 2, 3};
 
-    multi_span<int> s1 = {&arr[0], 2};  // shorter
-    multi_span<int> s2 = arr;           // longer
+    multi_span<int> s1 = {&arr[0], 2}; // shorter
+    multi_span<int> s2 = arr;          // longer
 
     CHECK(s1 != s2);
     CHECK(s2 != s1);
@@ -1081,8 +1092,8 @@ TEST_CASE("comparison_operators")
   }
 
   {
-    int arr1[] = {1, 2};  // smaller
-    int arr2[] = {2, 1};  // bigger
+    int arr1[] = {1, 2}; // smaller
+    int arr2[] = {2, 1}; // bigger
 
     multi_span<int> s1 = arr1;
     multi_span<int> s2 = arr2;
@@ -1138,8 +1149,8 @@ TEST_CASE("bounds_checks")
   CHECK_THROWS_AS((av[{0, -1}]), std::logic_error);
 }
 
-void overloaded_func(multi_span<const int, dynamic_range, 3, 5> exp,
-                     int expected_value)
+void overloaded_func(
+  multi_span<const int, dynamic_range, 3, 5> exp, int expected_value)
 {
   for (auto val : exp)
   {
@@ -1147,8 +1158,8 @@ void overloaded_func(multi_span<const int, dynamic_range, 3, 5> exp,
   }
 }
 
-void overloaded_func(multi_span<const char, dynamic_range, 3, 5> exp,
-                     char expected_value)
+void overloaded_func(
+  multi_span<const char, dynamic_range, 3, 5> exp, char expected_value)
 {
   for (auto val : exp)
   {
@@ -1237,7 +1248,7 @@ TEST_CASE("as_multi_span")
     auto av2 = as_multi_span(stdarr);
     overloaded_func(as_multi_span(av2, dim(1), dim<3>(), dim<5>()), 0);
 
-    string str = "ttttttttttttttt";  // size = 15
+    string str = "ttttttttttttttt"; // size = 15
     auto t = str.data();
     (void)t;
     auto av3 = as_multi_span(str);
@@ -1332,72 +1343,69 @@ TEST_CASE("index_constructor")
   delete[] arr;
 }
 
-TEST_CASE("index_constructors"){{// components of the same type
-                                 multi_span_index<3> i1(0, 1, 2);
-CHECK(i1[0] == 0);
-
-// components of different types
-std::size_t c0 = 0;
-std::size_t c1 = 1;
-multi_span_index<3> i2(c0, c1, 2);
-CHECK(i2[0] == 0);
-
-// from array
-multi_span_index<3> i3 = {0, 1, 2};
-CHECK(i3[0] == 0);
-
-// from other index of the same size type
-multi_span_index<3> i4 = i3;
-CHECK(i4[0] == 0);
-
-// default
-multi_span_index<3> i7;
-CHECK(i7[0] == 0);
-
-// default
-multi_span_index<3> i9 = {};
-CHECK(i9[0] == 0);
-}
-
+TEST_CASE("index_constructors")
 {
-  // components of the same type
-  multi_span_index<1> i1(0);
-  CHECK(i1[0] == 0);
+  {
+    // components of the same type
+    multi_span_index<3> i1(0, 1, 2);
+    CHECK(i1[0] == 0);
 
-  // components of different types
-  std::size_t c0 = 0;
-  multi_span_index<1> i2(c0);
-  CHECK(i2[0] == 0);
+    // from array
+    multi_span_index<3> i3 = {0, 1, 2};
+    CHECK(i3[0] == 0);
 
-  // from array
-  multi_span_index<1> i3 = {0};
-  CHECK(i3[0] == 0);
+    // from other index of the same size type
+    multi_span_index<3> i4 = i3;
+    CHECK(i4[0] == 0);
 
-  // from int
-  multi_span_index<1> i4 = 0;
-  CHECK(i4[0] == 0);
+    // default
+    multi_span_index<3> i7;
+    CHECK(i7[0] == 0);
 
-  // from other index of the same size type
-  multi_span_index<1> i5 = i3;
-  CHECK(i5[0] == 0);
+    // default
+    multi_span_index<3> i9 = {};
+    CHECK(i9[0] == 0);
+  }
 
-  // default
-  multi_span_index<1> i8;
-  CHECK(i8[0] == 0);
+  {
+    // components of the same type
+    multi_span_index<1> i1(0);
+    CHECK(i1[0] == 0);
 
-  // default
-  multi_span_index<1> i9 = {};
-  CHECK(i9[0] == 0);
-}
+    // components of different types
+    std::size_t c0 = 0;
+    multi_span_index<1> i2(c0);
+    CHECK(i2[0] == 0);
+
+    // from array
+    multi_span_index<1> i3 = {0};
+    CHECK(i3[0] == 0);
+
+    // from int
+    multi_span_index<1> i4 = 0;
+    CHECK(i4[0] == 0);
+
+    // from other index of the same size type
+    multi_span_index<1> i5 = i3;
+    CHECK(i5[0] == 0);
+
+    // default
+    multi_span_index<1> i8;
+    CHECK(i8[0] == 0);
+
+    // default
+    multi_span_index<1> i9 = {};
+    CHECK(i9[0] == 0);
+  }
 
 #ifdef CONFIRM_COMPILATION_ERRORS
-{
-  multi_span_index<3> i1(0, 1);
-  multi_span_index<3> i2(0, 1, 2, 3);
-  multi_span_index<3> i3 = {0};
-  multi_span_index<3> i4 = {0, 1, 2, 3};
-  multi_span_index<1> i5 = {0, 1};
-}
+  {
+    multi_span_index<3> i1(0, 1);
+    multi_span_index<3> i2(0, 1, 2, 3);
+    multi_span_index<3> i3 = {0};
+    multi_span_index<3> i4 = {0, 1, 2, 3};
+    multi_span_index<1> i5 = {0, 1};
+  }
 #endif
 }
 
@@ -1471,8 +1479,8 @@ void iterate_second_column(multi_span<int, dynamic_range, dynamic_range> av)
 
   for (auto i = 0; i < section.size(); ++i)
   {
-    auto idx =
-      multi_span_index<2>{i, 0};  // avoid braces inside the CHECK macro
+    // avoid braces inside the CHECK macro
+    auto idx = multi_span_index<2>{i, 0};
     CHECK(section[idx] == av[i][1]);
   }
 
@@ -1482,8 +1490,8 @@ void iterate_second_column(multi_span<int, dynamic_range, dynamic_range> av)
   {
     for (auto j = 0; j < section.bounds().index_bounds()[1]; ++j)
     {
-      auto idx =
-        multi_span_index<2>{i, j};  // avoid braces inside the CHECK macro
+      // avoid braces inside the CHECK macro
+      auto idx = multi_span_index<2>{i, j};
       CHECK(section[idx] == av[i][1]);
     }
   }
