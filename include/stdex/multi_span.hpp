@@ -93,9 +93,9 @@
       std::terminate();          \
   } while (0)
 #elif defined(MULTI_SPAN_UNENFORCED_ON_CONTRACT_VIOLATION)
-#define MULTI_SPAN_EXPECTS(cond) (void)cond
+#define MULTI_SPAN_EXPECTS(cond) (void)(cond)
 #else
-#define MULTI_SPAN_EXPECTS(cond) (void)cond
+#define MULTI_SPAN_EXPECTS(cond) (void)(cond)
 #endif // MULTI_SPAN_THROW_ON_CONTRACT_VIOLATION
 
 namespace stdex
