@@ -71,6 +71,7 @@
 #if defined(__GNUC__) && __GNUC__ > 6
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
+#endif
 
 #if defined(MULTI_SPAN_THROW_ON_CONTRACT_VIOLATION)
 #define MULTI_SPAN_STRINGIFY_DETAIL(x) #x
@@ -93,7 +94,6 @@
   } while (0)
 #elif defined(MULTI_SPAN_UNENFORCED_ON_CONTRACT_VIOLATION)
 #endif // MULTI_SPAN_THROW_ON_CONTRACT_VIOLATION
-#endif
 
 namespace stdex
 {
@@ -2662,9 +2662,6 @@ general_span_iterator<Span> operator+(
 }
 
 } // namespace stdex
-
-#undef MULTI_SPAN_STRINGIFY_DETAIL
-#undef MULTI_SPAN_STRINGIFY
 
 #if defined(_MSC_VER) && !defined(__clang__)
 #if _MSC_VER < 1910
